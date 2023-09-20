@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>		
+		<Platforms>x64</Platforms>
+		<Configurations>Debug;Release</Configurations>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
+		<PackageReference Include="Noesis.GUI" Version="3.2.1" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <None Update="Shaders\QuadVS.hlsl">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Shaders\ResolvePS.hlsl">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Shaders\ShaderPS.hlsl">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Shaders\ShaderVS.hlsl">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+</Project>

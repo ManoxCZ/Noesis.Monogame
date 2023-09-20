@@ -1,0 +1,378 @@
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin /$(Platform)
+/intermediateDir:obj /$(Platform)
+/platform:Windows
+/config:
+/profile:HiDef
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+
+#---------------------------------- Content ---------------------------------#
+
+# begin Noesis/Effects/RGBA.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=EFFECT_RGBA
+/build:Noesis/Effects/RGBA.fx
+
+# begin Noesis/Effects/Mask.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=EFFECT_MASK
+/build:Noesis/Effects/Mask.fx
+
+# begin Noesis/Effects/Clear.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=EFFECT_CLEAR
+/build:Noesis/Effects/Clear.fx
+
+# begin Noesis/Effects/Path_Solid.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_COLOR;EFFECT_PATH;PAINT_SOLID
+/build:Noesis/Effects/Path_Solid.fx
+
+# begin Noesis/Effects/Path_Linear.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;EFFECT_PATH;PAINT_LINEAR
+/build:Noesis/Effects/Path_Linear.fx
+
+# begin Noesis/Effects/Path_Radial.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;EFFECT_PATH;PAINT_RADIAL
+/build:Noesis/Effects/Path_Radial.fx
+
+# begin Noesis/Effects/Path_Pattern.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;EFFECT_PATH;PAINT_PATTERN
+/build:Noesis/Effects/Path_Pattern.fx
+
+# begin Noesis/Effects/Path_Pattern_Clamp.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_RECT;EFFECT_PATH;PAINT_PATTERN;CLAMP_PATTERN
+/build:Noesis/Effects/Path_Pattern_Clamp.fx
+
+# begin Noesis/Effects/Path_Pattern_Repeat.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_RECT;HAS_TILE;EFFECT_PATH;PAINT_PATTERN;REPEAT_PATTERN
+/build:Noesis/Effects/Path_Pattern_Repeat.fx
+
+# begin Noesis/Effects/Path_Pattern_MirrorU.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_RECT;HAS_TILE;EFFECT_PATH;PAINT_PATTERN;MIRRORU_PATTERN
+/build:Noesis/Effects/Path_Pattern_MirrorU.fx
+
+# begin Noesis/Effects/Path_Pattern_MirrorV.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_RECT;HAS_TILE;EFFECT_PATH;PAINT_PATTERN;MIRRORV_PATTERN
+/build:Noesis/Effects/Path_Pattern_MirrorV.fx
+
+# begin Noesis/Effects/Path_Pattern_Mirror.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_RECT;HAS_TILE;EFFECT_PATH;PAINT_PATTERN;MIRROR_PATTERN
+/build:Noesis/Effects/Path_Pattern_Mirror.fx
+
+# begin Noesis/Effects/Path_AA_Solid.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_COLOR;HAS_COVERAGE;EFFECT_PATH_AA;PAINT_SOLID
+/build:Noesis/Effects/Path_AA_Solid.fx
+
+# begin Noesis/Effects/Path_AA_Linear.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_COVERAGE;EFFECT_PATH_AA;PAINT_LINEAR
+/build:Noesis/Effects/Path_AA_Linear.fx
+
+# begin Noesis/Effects/Path_AA_Radial.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_COVERAGE;EFFECT_PATH_AA;PAINT_RADIAL
+/build:Noesis/Effects/Path_AA_Radial.fx
+
+# begin Noesis/Effects/Path_AA_Pattern.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_COVERAGE;EFFECT_PATH_AA;PAINT_PATTERN
+/build:Noesis/Effects/Path_AA_Pattern.fx
+
+# begin Noesis/Effects/Path_AA_Pattern_Clamp.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_COVERAGE;HAS_RECT;EFFECT_PATH_AA;PAINT_PATTERN;CLAMP_PATTERN
+/build:Noesis/Effects/Path_AA_Pattern_Clamp.fx
+
+# begin Noesis/Effects/Path_AA_Pattern_Repeat.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_COVERAGE;HAS_RECT;HAS_TILE;EFFECT_PATH_AA;PAINT_PATTERN;REPEAT_PATTERN
+/build:Noesis/Effects/Path_AA_Pattern_Repeat.fx
+
+# begin Noesis/Effects/Path_AA_Pattern_MirrorU.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_COVERAGE;HAS_RECT;HAS_TILE;EFFECT_PATH_AA;PAINT_PATTERN;MIRRORU_PATTERN
+/build:Noesis/Effects/Path_AA_Pattern_MirrorU.fx
+
+# begin Noesis/Effects/Path_AA_Pattern_MirrorV.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_COVERAGE;HAS_RECT;HAS_TILE;EFFECT_PATH_AA;PAINT_PATTERN;MIRRORV_PATTERN
+/build:Noesis/Effects/Path_AA_Pattern_MirrorV.fx
+
+# begin Noesis/Effects/Path_AA_Pattern_Mirror.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_COVERAGE;HAS_RECT;HAS_TILE;EFFECT_PATH_AA;PAINT_PATTERN;MIRROR_PATTERN
+/build:Noesis/Effects/Path_AA_Pattern_Mirror.fx
+
+# begin Noesis/Effects/SDF_Solid.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_COLOR;HAS_UV1;SDF;EFFECT_SDF;PAINT_SOLID
+/build:Noesis/Effects/SDF_Solid.fx
+
+# begin Noesis/Effects/SDF_Linear.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;SDF;EFFECT_SDF;PAINT_LINEAR
+/build:Noesis/Effects/SDF_Linear.fx
+
+# begin Noesis/Effects/SDF_Radial.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;SDF;EFFECT_SDF;PAINT_RADIAL
+/build:Noesis/Effects/SDF_Radial.fx
+
+# begin Noesis/Effects/SDF_Pattern.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;SDF;EFFECT_SDF;PAINT_PATTERN
+/build:Noesis/Effects/SDF_Pattern.fx
+
+# begin Noesis/Effects/SDF_Pattern_Clamp.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;SDF;EFFECT_SDF;PAINT_PATTERN;CLAMP_PATTERN
+/build:Noesis/Effects/SDF_Pattern_Clamp.fx
+
+# begin Noesis/Effects/SDF_Pattern_Repeat.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;SDF;EFFECT_SDF;PAINT_PATTERN;REPEAT_PATTERN
+/build:Noesis/Effects/SDF_Pattern_Repeat.fx
+
+# begin Noesis/Effects/SDF_Pattern_MirrorU.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;SDF;EFFECT_SDF;PAINT_PATTERN;MIRRORU_PATTERN
+/build:Noesis/Effects/SDF_Pattern_MirrorU.fx
+
+# begin Noesis/Effects/SDF_Pattern_MirrorV.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;SDF;EFFECT_SDF;PAINT_PATTERN;MIRRORV_PATTERN
+/build:Noesis/Effects/SDF_Pattern_MirrorV.fx
+
+# begin Noesis/Effects/SDF_Pattern_Mirror.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;SDF;EFFECT_SDF;PAINT_PATTERN;MIRROR_PATTERN
+/build:Noesis/Effects/SDF_Pattern_Mirror.fx
+
+# begin Noesis/Effects/SDF_LCD_Solid.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_COLOR;HAS_UV1;SDF;EFFECT_SDF_LCD;PAINT_SOLID
+/build:Noesis/Effects/SDF_LCD_Solid.fx
+
+# begin Noesis/Effects/SDF_LCD_Linear.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;SDF;EFFECT_SDF_LCD;PAINT_LINEAR
+/build:Noesis/Effects/SDF_LCD_Linear.fx
+
+# begin Noesis/Effects/SDF_LCD_Radial.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;SDF;EFFECT_SDF_LCD;PAINT_RADIAL
+/build:Noesis/Effects/SDF_LCD_Radial.fx
+
+# begin Noesis/Effects/SDF_LCD_Pattern.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;SDF;EFFECT_SDF_LCD;PAINT_PATTERN
+/build:Noesis/Effects/SDF_LCD_Pattern.fx
+
+# begin Noesis/Effects/SDF_LCD_Pattern_Clamp.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;SDF;EFFECT_SDF_LCD;PAINT_PATTERN;CLAMP_PATTERN
+/build:Noesis/Effects/SDF_LCD_Pattern_Clamp.fx
+
+# begin Noesis/Effects/SDF_LCD_Pattern_Repeat.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;SDF;EFFECT_SDF_LCD;PAINT_PATTERN;REPEAT_PATTERN
+/build:Noesis/Effects/SDF_LCD_Pattern_Repeat.fx
+
+# begin Noesis/Effects/SDF_LCD_Pattern_MirrorU.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;SDF;EFFECT_SDF_LCD;PAINT_PATTERN;MIRRORU_PATTERN
+/build:Noesis/Effects/SDF_LCD_Pattern_MirrorU.fx
+
+# begin Noesis/Effects/SDF_LCD_Pattern_MirrorV.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;SDF;EFFECT_SDF_LCD;PAINT_PATTERN;MIRRORV_PATTERN
+/build:Noesis/Effects/SDF_LCD_Pattern_MirrorV.fx
+
+# begin Noesis/Effects/SDF_LCD_Pattern_Mirror.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;SDF;EFFECT_SDF_LCD;PAINT_PATTERN;MIRROR_PATTERN
+/build:Noesis/Effects/SDF_LCD_Pattern_Mirror.fx
+
+# begin Noesis/Effects/Opacity_Solid.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_COLOR;HAS_UV1;EFFECT_OPACITY;PAINT_SOLID
+/build:Noesis/Effects/Opacity_Solid.fx
+
+# begin Noesis/Effects/Opacity_Linear.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;EFFECT_OPACITY;PAINT_LINEAR
+/build:Noesis/Effects/Opacity_Linear.fx
+
+# begin Noesis/Effects/Opacity_Radial.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;EFFECT_OPACITY;PAINT_RADIAL
+/build:Noesis/Effects/Opacity_Radial.fx
+
+# begin Noesis/Effects/Opacity_Pattern.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;EFFECT_OPACITY;PAINT_PATTERN
+/build:Noesis/Effects/Opacity_Pattern.fx
+
+# begin Noesis/Effects/Opacity_Pattern_Clamp.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;EFFECT_OPACITY;PAINT_PATTERN;CLAMP_PATTERN
+/build:Noesis/Effects/Opacity_Pattern_Clamp.fx
+
+# begin Noesis/Effects/Opacity_Pattern_Repeat.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;EFFECT_OPACITY;PAINT_PATTERN;REPEAT_PATTERN
+/build:Noesis/Effects/Opacity_Pattern_Repeat.fx
+
+# begin Noesis/Effects/Opacity_Pattern_MirrorU.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;EFFECT_OPACITY;PAINT_PATTERN;MIRRORU_PATTERN
+/build:Noesis/Effects/Opacity_Pattern_MirrorU.fx
+
+# begin Noesis/Effects/Opacity_Pattern_MirrorV.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;EFFECT_OPACITY;PAINT_PATTERN;MIRRORV_PATTERN
+/build:Noesis/Effects/Opacity_Pattern_MirrorV.fx
+
+# begin Noesis/Effects/Opacity_Pattern_Mirror.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;HAS_RECT;HAS_TILE;EFFECT_OPACITY;PAINT_PATTERN;MIRROR_PATTERN
+/build:Noesis/Effects/Opacity_Pattern_Mirror.fx
+
+# begin Noesis/Effects/Upsample.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_COLOR;HAS_UV0;HAS_UV1;EFFECT_UPSAMPLE
+/build:Noesis/Effects/Upsample.fx
+
+# begin Noesis/Effects/Downsample.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_UV0;HAS_UV1;DOWNSAMPLE;EFFECT_DOWNSAMPLE
+/build:Noesis/Effects/Downsample.fx
+
+# begin Noesis/Effects/Shadow.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_COLOR;HAS_UV1;HAS_RECT;EFFECT_SHADOW;PAINT_SOLID
+/build:Noesis/Effects/Shadow.fx
+
+# begin Noesis/Effects/Blur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=HAS_COLOR;HAS_UV1;EFFECT_BLUR;PAINT_SOLID
+/build:Noesis/Effects/Blur.fx
+

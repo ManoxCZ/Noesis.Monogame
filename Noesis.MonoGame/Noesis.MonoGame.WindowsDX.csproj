@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<OutputType>Library</OutputType>
+		<RootNamespace>Noesis.MonoGame</RootNamespace>
+		<AssemblyName>Noesis.MonoGame</AssemblyName>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<PlatformTarget>x64</PlatformTarget>
+		<Nullable>enable</Nullable>
+		<DefineConstants>WINDOWSDX</DefineConstants>
+		<Configurations>Debug;Release</Configurations>
+	</PropertyGroup>
+	<ItemGroup>
+	  <MonoGameContentReference Include="Content\Content.mgcb" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
+		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
+		<PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+		<PackageReference Include="Noesis.GUI" Version="3.2.1" />
+	</ItemGroup>	
+</Project>
