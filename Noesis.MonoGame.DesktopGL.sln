@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34003.232
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noesis.MonoGame.CodeGenerator", "Noesis.MonoGame.CodeGenerator\Noesis.MonoGame.CodeGenerator.csproj", "{1A377146-7CE2-4357-A88D-C44A841AFF5A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noesis.MonoGame.DesktopGL", "Noesis.MonoGame\Noesis.MonoGame.DesktopGL.csproj", "{0A947ED1-EEFD-4799-B916-83F3819326F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noesis.MonoGame.TestApp.DesktopGL", "Noesis.MonoGame.TestApp\Noesis.MonoGame.TestApp.DesktopGL.csproj", "{3E34AEFC-9DCA-4435-B317-694661206DCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A377146-7CE2-4357-A88D-C44A841AFF5A}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{1A377146-7CE2-4357-A88D-C44A841AFF5A}.Debug|Any CPU.Build.0 = Debug|x64
+		{1A377146-7CE2-4357-A88D-C44A841AFF5A}.Debug|x64.ActiveCfg = Debug|x64
+		{1A377146-7CE2-4357-A88D-C44A841AFF5A}.Debug|x64.Build.0 = Debug|x64
+		{1A377146-7CE2-4357-A88D-C44A841AFF5A}.Release|Any CPU.ActiveCfg = Release|x64
+		{1A377146-7CE2-4357-A88D-C44A841AFF5A}.Release|Any CPU.Build.0 = Release|x64
+		{1A377146-7CE2-4357-A88D-C44A841AFF5A}.Release|x64.ActiveCfg = Release|x64
+		{1A377146-7CE2-4357-A88D-C44A841AFF5A}.Release|x64.Build.0 = Release|x64
+		{0A947ED1-EEFD-4799-B916-83F3819326F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A947ED1-EEFD-4799-B916-83F3819326F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A947ED1-EEFD-4799-B916-83F3819326F5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0A947ED1-EEFD-4799-B916-83F3819326F5}.Debug|x64.Build.0 = Debug|Any CPU
+		{0A947ED1-EEFD-4799-B916-83F3819326F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A947ED1-EEFD-4799-B916-83F3819326F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A947ED1-EEFD-4799-B916-83F3819326F5}.Release|x64.ActiveCfg = Release|Any CPU
+		{0A947ED1-EEFD-4799-B916-83F3819326F5}.Release|x64.Build.0 = Release|Any CPU
+		{3E34AEFC-9DCA-4435-B317-694661206DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E34AEFC-9DCA-4435-B317-694661206DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E34AEFC-9DCA-4435-B317-694661206DCC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3E34AEFC-9DCA-4435-B317-694661206DCC}.Debug|x64.Build.0 = Debug|Any CPU
+		{3E34AEFC-9DCA-4435-B317-694661206DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E34AEFC-9DCA-4435-B317-694661206DCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E34AEFC-9DCA-4435-B317-694661206DCC}.Release|x64.ActiveCfg = Release|Any CPU
+		{3E34AEFC-9DCA-4435-B317-694661206DCC}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4CE57D6-6586-4DC7-9FA5-354F4897A303}
+	EndGlobalSection
+EndGlobal

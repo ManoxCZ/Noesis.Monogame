@@ -6,6 +6,7 @@
 		<AssemblyName>Noesis.MonoGame</AssemblyName>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<PlatformTarget>x64</PlatformTarget>
+		<DefineConstants>DESKTOPGL</DefineConstants>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
