@@ -41,8 +41,7 @@ public class GameWithNoesis : Microsoft.Xna.Framework.Game
 
         Window.AllowUserResizing = true;
         Window.ClientSizeChanged += (sender, e) => { MainView.SetSize(Window.ClientBounds.Width, Window.ClientBounds.Height); };
-
-        // we need this for NoesisGUI (as we draw it directly into the main framebuffer)        
+        
         _graphicsDeviceManager.PreferredDepthStencilFormat = Microsoft.Xna.Framework.Graphics.DepthFormat.Depth24Stencil8;
         _graphicsDeviceManager.ApplyChanges();        
 
