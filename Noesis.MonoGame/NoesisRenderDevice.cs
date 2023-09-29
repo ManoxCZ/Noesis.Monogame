@@ -142,16 +142,15 @@ public sealed class NoesisRenderDevice : RenderDevice
                 ColorDestinationBlend = Microsoft.Xna.Framework.Graphics.Blend.One,
                 ColorSourceBlend = Microsoft.Xna.Framework.Graphics.Blend.One,
                 ColorBlendFunction = Microsoft.Xna.Framework.Graphics.BlendFunction.Add,
-            },
+            },            
             new()
             {
-                Name = "SrcOver_Dual",
-                IndependentBlendEnable = false,
+                Name = "SrcOver_Dual",                
                 AlphaBlendFunction = Microsoft.Xna.Framework.Graphics.BlendFunction.Add,
                 AlphaDestinationBlend = Microsoft.Xna.Framework.Graphics.Blend.InverseSourceAlpha,
                 AlphaSourceBlend = Microsoft.Xna.Framework.Graphics.Blend.One,
                 ColorBlendFunction = Microsoft.Xna.Framework.Graphics.BlendFunction.Add,
-                ColorDestinationBlend = Microsoft.Xna.Framework.Graphics.Blend.InverseSourceColor,
+                ColorDestinationBlend = Microsoft.Xna.Framework.Graphics.Blend.InverseSourceAlpha,
                 ColorSourceBlend = Microsoft.Xna.Framework.Graphics.Blend.One,
             }
         };
@@ -173,7 +172,7 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     private static Microsoft.Xna.Framework.Graphics.DepthStencilState[] CreateDepthStencilStates()
     {
-        return Enumerable.Range(0, 2).SelectMany(index =>
+        return Enumerable.Range(0, 5).SelectMany(index =>
         {
             return new Microsoft.Xna.Framework.Graphics.DepthStencilState[]
             {

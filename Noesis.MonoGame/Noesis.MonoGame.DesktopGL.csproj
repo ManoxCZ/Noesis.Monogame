@@ -6,14 +6,10 @@
 		<AssemblyName>Noesis.MonoGame</AssemblyName>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<PlatformTarget>x64</PlatformTarget>
-		<DefineConstants>DESKTOPGL</DefineConstants>
 		<Nullable>enable</Nullable>
+		<DefineConstants>DESKTOPGL</DefineConstants>
+		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
-	</PropertyGroup>	
-
 	<ItemGroup>
 	  <MonoGameContentReference Include="Content\Content.mgcb" />
 	</ItemGroup>

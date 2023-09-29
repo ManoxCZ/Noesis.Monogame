@@ -20,11 +20,17 @@
 	  <None Update="Shaders\ResolvePS.hlsl">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Shaders\ShaderPS.hlsl">
+	  <None Update="Shaders\ShaderPS-WindowsDX.hlsl">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Shaders\ShaderVS.hlsl">
+	  <None Update="Shaders\ShaderVS-WindowsDX.hlsl">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
+		<None Update="Shaders\ShaderPS-DesktopGL.hlsl">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Shaders\ShaderVS-DesktopGL.hlsl">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 </Project>
