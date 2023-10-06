@@ -21,7 +21,7 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore Noesis.Monogame.DesktopGL.sln 
+      run: dotnet restore Noesis.MonoGame.DesktopGL.sln 
     - name: Build
-      run: dotnet build Noesis.Monogame.DesktopGL.sln --no-restore
+      run: dotnet build Noesis.MonoGame.DesktopGL.sln --no-restore
     
