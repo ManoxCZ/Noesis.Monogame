@@ -23,6 +23,6 @@ jobs:
     - name: Build
       run: dotnet build Noesis.MonoGame.DesktopGL.sln -c Release --no-restore
     - name: Pack Nuget package
-      run: dotnet pack Noesis.MonoGame.DesktopGL.sln -c Release --no-restore --output
+      run: dotnet pack Noesis.MonoGame.DesktopGL.sln -c Release --no-restore --output .
     - name: Upload to Nuget.org
       run: dotnet  nuget push "*.nupkg" --api-key ${{secrets.NUGETORG}} --source https://api.nuget.org/v3/index.json
