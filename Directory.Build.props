@@ -1,0 +1,9 @@
+<Project>
+	<PropertyGroup>
+		<Product>Noesis.Monogame</Product>
+		<Company>Manox Games</Company>
+		<Copyright>Copyright © 2023</Copyright>
+		<Description>Noesis.Monogame is "native" Noesis integration to Monogame framework.</Description>
+		<Version>3.2.2-alpha01</Version>
+	</PropertyGroup>
+</Project>

@@ -462,7 +462,7 @@ public sealed class NoesisRenderDevice : RenderDevice
         effect.Techniques[0].Passes[0].Apply();
 
         SetRenderDeviceState(batch);
-
+        
         NoesisVertexUtils.DrawUserIndexedPrimitives(_device, _vertices, _indices, batch);
     }
 
