@@ -1,5 +1,8 @@
 Noesis.Monogame - "Native" Noesis renderer in Monogame
 =============
+
+[![DevCI-DesktopGL](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/dotnet.yml)
+
 This library provides the solution for integration [NoesisGUI](http://noesisengine.com) with [MonoGame 3.8.1](http://monogame.net) library.
 Example MonoGame project with integrated NoesisGUI is included.
 
