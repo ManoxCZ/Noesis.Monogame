@@ -19,10 +19,10 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore Noesis.MonoGame.DesktopGL.sln 
+      run: dotnet restore Noesis.MonoGame\Noesis.MonoGame.DesktopGL.csproj
     - name: Build
-      run: dotnet build Noesis.MonoGame.DesktopGL.sln -c Release --no-restore
+      run: dotnet build Noesis.MonoGame\Noesis.MonoGame.DesktopGL.csproj -c Release --no-restore
     - name: Pack Nuget package
-      run: dotnet pack Noesis.MonoGame.DesktopGL.sln -c Release --no-restore --output .
+      run: dotnet pack Noesis.MonoGame\Noesis.MonoGame.DesktopGL.csproj -c Release --no-restore --output .
     - name: Upload to Nuget.org
       run: dotnet nuget push "*.nupkg" --api-key ${{ secrets.NUGETORG }} --source https://api.nuget.org/v3/index.json

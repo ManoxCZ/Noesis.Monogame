@@ -9,8 +9,10 @@
 		<Nullable>enable</Nullable>
 		<DefineConstants>WINDOWSDX</DefineConstants>
 		<Configurations>Debug;Release</Configurations>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Include="..\readme.md" Pack="true" PackagePath="\"/>
 	  <MonoGameContentReference Include="Content\Content.mgcb" />
 	</ItemGroup>
 	<ItemGroup>
