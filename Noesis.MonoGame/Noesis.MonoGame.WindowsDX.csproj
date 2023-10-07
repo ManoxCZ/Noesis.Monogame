@@ -9,7 +9,7 @@
 		<Nullable>enable</Nullable>
 		<DefineConstants>WINDOWSDX</DefineConstants>
 		<Configurations>Debug;Release</Configurations>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageId>MonoGame.Noesis.WindowsDX</PackageId>		
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Include="..\readme.md" Pack="true" PackagePath="\"/>

@@ -9,10 +9,10 @@
 		<Nullable>enable</Nullable>
 		<DefineConstants>DESKTOPGL</DefineConstants>
 		<Configurations>Debug;Release</Configurations>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageId>MonoGame.Noesis.DesktopGL</PackageId>		
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Include="..\readme.md" Pack="true" PackagePath="\"/>
+	  <None Include="..\README.md" Pack="true" PackagePath="\"/>	  
 	  <MonoGameContentReference Include="Content\Content.mgcb" />
 	</ItemGroup>
 	<ItemGroup>
