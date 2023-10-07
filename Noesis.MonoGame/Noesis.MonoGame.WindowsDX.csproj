@@ -12,7 +12,7 @@
 		<PackageId>MonoGame.Noesis.WindowsDX</PackageId>		
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Include="..\readme.md" Pack="true" PackagePath="\"/>
+	  <None Include="..\README.md" Pack="true" PackagePath="\"/>
 	  <MonoGameContentReference Include="Content\Content.mgcb" />
 	</ItemGroup>
 	<ItemGroup>
