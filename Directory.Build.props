@@ -1,6 +1,5 @@
 <Project>
-	<PropertyGroup>
-		<Version>3.2.1-beta3</Version>
+	<PropertyGroup>		
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>		
 		<Authors>Marek Novosad</Authors>
