@@ -1,7 +1,7 @@
 ﻿
 namespace Noesis.MonoGame;
 
-internal class NoesisRenderTarget : RenderTarget
+public class NoesisRenderTarget : RenderTarget
 {
     public string Label { get; }
     public Microsoft.Xna.Framework.Graphics.RenderTarget2D RenderTarget2D { get; }

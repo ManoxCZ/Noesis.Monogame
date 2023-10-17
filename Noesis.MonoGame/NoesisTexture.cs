@@ -2,7 +2,7 @@
 
 namespace Noesis.MonoGame;
 
-internal sealed class NoesisTexture : Texture
+public sealed class NoesisTexture : Texture
 {
     public string Label { get; }
     public Microsoft.Xna.Framework.Graphics.Texture2D Texture { get; }
