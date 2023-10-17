@@ -1,7 +1,8 @@
 Noesis.Monogame - "Native" Noesis renderer in Monogame
 =============
+WindowsDX: [![WindowsDX](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/Dev-CI.WindowsDX.yml/badge.svg)](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/Dev-CI.WindowsDX.yml) [![Nuget WindowsDX version (MonoGame.Noesis.WindowsDX)](https://img.shields.io/nuget/v/MonoGame.Noesis.WindowsDX.svg?style=flat-square)](https://www.nuget.org/packages/MonoGame.Noesis.WindowsDX)
 
-[![WindowsDX](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/Dev-CI.WindowsDX.yml/badge.svg)](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/Dev-CI.WindowsDX.yml) [![DesktopGL](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/Dev-CI.DesktopGL.yml/badge.svg)](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/Dev-CI.DesktopGL.yml)
+DesktopGL: [![DesktopGL](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/Dev-CI.DesktopGL.yml/badge.svg)](https://github.com/ManoxCZ/Noesis.Monogame/actions/workflows/Dev-CI.DesktopGL.yml) [![Nuget DesktopGL version (MonoGame.Noesis.DesktopGL)](https://img.shields.io/nuget/v/MonoGame.Noesis.DesktopGL.svg?style=flat-square)](https://www.nuget.org/packages/MonoGame.Noesis.DesktopGL) 
 
 This library provides the solution for integration [NoesisGUI](http://noesisengine.com) with [MonoGame 3.8.1](http://monogame.net) library.
 Example MonoGame project with integrated NoesisGUI is included.
