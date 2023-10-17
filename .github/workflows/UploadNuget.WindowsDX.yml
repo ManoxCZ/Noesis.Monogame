@@ -23,7 +23,7 @@ jobs:
       - name: Update version
         run: |
           dotnet tool install -g dotnet-setversion   
-          setversion ${{github.ref_name}} Noesis.MonoGame\Noesis.MonoGame.WindowsDX.csproj
+          setversion ${{ github.ref_name }} Noesis.MonoGame\Noesis.MonoGame.WindowsDX.csproj
       - name: Build
         run: dotnet build Noesis.MonoGame\Noesis.MonoGame.WindowsDX.csproj -c Release --no-restore
       - name: Pack Nuget package
