@@ -21,8 +21,8 @@ public static class Program
 
         using (var game = new GameWithNoesis(loggerFactory)
         {
-            NoesisLicenceName = "your_licence_name",
-            NoesisLicenceKey = "your_licence_key",
+            NoesisLicenceName = string.Empty,
+            NoesisLicenceKey = string.Empty,
             NoesisThemeFilename = @"GUI/Resources.xaml",
             NoesisMainViewFilename = @"GUI/MainWindow.xaml",
         })

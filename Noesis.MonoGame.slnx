@@ -1,0 +1,17 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Project Path="Noesis.MonoGame.CodeGenerator/Noesis.MonoGame.CodeGenerator.csproj">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="Noesis.MonoGame.Content/Noesis.MonoGame.Content.csproj" Id="8c69a05d-4dc8-44dc-b5c1-d7e06fb58a95">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="Noesis.MonoGame.TestApp/Noesis.MonoGame.TestApp.csproj" />
+  <Project Path="Noesis.MonoGame/Noesis.MonoGame.csproj" />
+</Solution>

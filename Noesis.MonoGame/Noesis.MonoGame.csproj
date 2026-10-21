@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<RootNamespace>Noesis.MonoGame</RootNamespace>
+		<AssemblyName>Noesis.MonoGame</AssemblyName>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<PackageId>MonoGame.Noesis</PackageId>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.13" />
+		<PackageReference Include="MonoGame.Framework.Native" Version="3.8.6" />
+		<PackageReference Include="Noesis.GUI" Version="4.0.0" />
+	</ItemGroup>
+	<Import Project="..\Noesis.MonoGame.Content\BuildContent.targets" />
+	<Target Name="IncludeMonoGameContentInProjectOutput" BeforeTargets="GetCopyToOutputDirectoryItems">
+		<ItemGroup>
+			<_ContentFilesToCopy Include="$(TargetDir)Content\**\*.*" />
+
+			<ContentWithTargetPath Include="@(_ContentFilesToCopy)">
+				<TargetPath>Content\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			</ContentWithTargetPath>
+		</ItemGroup>
+	</Target>
+</Project>
