@@ -4,7 +4,8 @@
 		<RootNamespace>Noesis.MonoGame</RootNamespace>
 		<AssemblyName>Noesis.MonoGame</AssemblyName>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<PackageId>MonoGame.Noesis</PackageId>
+		<PackageId>Noesis.MonoGame</PackageId>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\README.md" Pack="true" PackagePath="\" />
@@ -24,5 +25,5 @@
 				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			</ContentWithTargetPath>
 		</ItemGroup>
-	</Target>
+	</Target>	
 </Project>

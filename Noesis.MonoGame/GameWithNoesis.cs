@@ -17,6 +17,7 @@ public class GameWithNoesis : Microsoft.Xna.Framework.Game
     private readonly Microsoft.Xna.Framework.GraphicsDeviceManager _graphicsDeviceManager;
     private Microsoft.Xna.Framework.Input.MouseState _previousState;
     private NoesisViewWrapper MainView = null!;
+    private NoesisRenderDevice? _renderDevice;
 
     public GameWithNoesis(ILoggerFactory? loggerFactory = null)
     {
@@ -83,6 +84,8 @@ public class GameWithNoesis : Microsoft.Xna.Framework.Game
             renderDevice.GlyphCacheWidth = renderDevice.GlyphCacheHeight = 2048;
             renderDevice.OffscreenSampleCount = NoesisAntiAlliasingOffscreenSampleCount;
 
+            _renderDevice = renderDevice;
+
             MainView = new NoesisViewWrapper(controlTreeRoot, renderDevice)
             {
                 RenderFlags = RenderFlags.LCD | RenderFlags.PPAA
@@ -111,7 +114,16 @@ public class GameWithNoesis : Microsoft.Xna.Framework.Game
     /// </summary>
     protected override void UnloadContent()
     {
-        GUI.UnregisterNativeTypes();
+        // release renderer resources while the GraphicsDevice is still alive, then shut NoesisGUI down
+        MainView?.Shutdown();
+        MainView = null!;
+
+        _renderDevice?.ReleaseGraphicsResources();
+        _renderDevice = null;
+
+        NoesisResourceTracker.DisposeAll();
+
+        GUI.Shutdown();
 
         // TODO: Unload any non ContentManager content here
     }
@@ -139,6 +151,8 @@ public class GameWithNoesis : Microsoft.Xna.Framework.Game
 
         // update NoesisGUI after updating game logic (it will perform layout and other operations)
         MainView.Update(gameTime);
+
+        NoesisResourceTracker.DisposeReleased();
     }
 
     /// <summary>

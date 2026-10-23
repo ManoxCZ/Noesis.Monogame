@@ -83,9 +83,12 @@ public class FolderTextureProvider : TextureProvider, IDisposable
 
         string fullPath = System.IO.Path.Combine(Environment.CurrentDirectory, filename);
 
-        FileStream fileStream = File.OpenRead(fullPath);
+        using FileStream fileStream = File.OpenRead(fullPath);
 
         Microsoft.Xna.Framework.Graphics.Texture2D texture = LoadTextureFromStream(fileStream);
+
+        // keep it alive until a Noesis wrapper releases it, it must not be finalized (see NoesisResourceTracker)
+        NoesisResourceTracker.Track(texture);
 
         _cache[filename] = new WeakReference<Microsoft.Xna.Framework.Graphics.Texture2D>(texture);
 

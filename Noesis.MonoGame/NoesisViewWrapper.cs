@@ -70,6 +70,11 @@ public class NoesisViewWrapper
         View.Renderer.UpdateRenderTree();
     }
 
+    public void Shutdown()
+    {
+        View.Renderer.Shutdown();
+    }
+
     public void Update(Microsoft.Xna.Framework.GameTime gameTime)
     {
         View.Update(gameTime.TotalGameTime.TotalSeconds);

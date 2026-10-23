@@ -421,7 +421,7 @@
         </b:TimerTrigger>
       </b:Interaction.Triggers>-->
             <StackPanel.RenderTransform>
-                <TranslateTransform X="50"/>
+                <TranslateTransform X="0"/>
             </StackPanel.RenderTransform>
             <ContentPresenter x:Name="HeaderHost" ContentSource="Header"/>
             <Grid Margin="0,10,0,0">

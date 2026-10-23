@@ -1,7 +1,4 @@
-﻿//#define EXPORT_TEXTURES
-//#define DEBUG_LOG
-
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Noesis.MonoGame.Generated;
 using System;
@@ -13,20 +10,20 @@ namespace Noesis.MonoGame;
 
 public sealed class NoesisRenderDevice : RenderDevice
 {
-#if WINDOWSDX
+#if DESKTOP_GL
+	private const string PATTERN_TEXTURE_SLOT = "patternSampler+pattern";
+	private const string RAMPS_TEXTURE_SLOT = "ramps";
+	private const string IMAGE_TEXTURE_SLOT = "imageSampler+image";
+	private const string GLYPHS_TEXTURE_SLOT = "glyphsSampler+glyphs";
+	private const string SHADOW_TEXTURE_SLOT = "shadowSampler+shadow";
+#else
     private const string PATTERN_TEXTURE_SLOT = "pattern";
     private const string RAMPS_TEXTURE_SLOT = "ramps";
     private const string IMAGE_TEXTURE_SLOT = "image";
     private const string GLYPHS_TEXTURE_SLOT = "glyphs";
     private const string SHADOW_TEXTURE_SLOT = "shadow";
-#else
-    private const string PATTERN_TEXTURE_SLOT = "patternSampler+pattern";
-    private const string RAMPS_TEXTURE_SLOT = "ramps";
-    private const string IMAGE_TEXTURE_SLOT = "imageSampler+image";
-    private const string GLYPHS_TEXTURE_SLOT = "glyphsSampler+glyphs";
-    private const string SHADOW_TEXTURE_SLOT = "shadowSampler+shadow";
 #endif
-    private const string PROJECTION_MATRIX_PARAMETER = "projectionMtx";
+	private const string PROJECTION_MATRIX_PARAMETER = "projectionMtx";
     private const string TEXTURE_SIZE_PARAMETER = "textureSize";
     private const string OPACITY_PARAMETER = "opacity";
     private const string RGBA_PARAMETER = "rgba";
@@ -43,11 +40,11 @@ public sealed class NoesisRenderDevice : RenderDevice
     private readonly Microsoft.Xna.Framework.Graphics.RasterizerState[] _rasterizerStates;
     private readonly Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch;
 
-    private byte[] _vertices = Array.Empty<byte>();
+    private byte[] _vertices = [];
     private Memory<byte> _verticesMemory = new();
     private MemoryHandle? _verticesMemoryHandle;
 
-    private short[] _indices = Array.Empty<short>();
+    private short[] _indices = [];
     private Memory<short> _indicesMemory = new();
     private MemoryHandle? _indicesMemoryHandle;
 
@@ -83,7 +80,35 @@ public sealed class NoesisRenderDevice : RenderDevice
         GlyphCacheHeight = 2048;
     }
 
-    private static Microsoft.Xna.Framework.Graphics.Effect[] LoadShaders(Microsoft.Xna.Framework.Content.ContentManager contentManager)
+    /// <summary>
+    /// Disposes MonoGame resources owned by the device. Must be called from the main thread after the Noesis renderer is shut down,
+    /// MonoGame resources must not be left to the finalizer (it crashes or blocks NoesisGUI shutdown).
+    /// Effects are owned by the ContentManager and are not disposed here.
+    /// </summary>
+    public void ReleaseGraphicsResources()
+    {
+        // index 0 is the shared BlendState.Opaque
+        for (int i = 1; i < _blendStates.Length; i++)
+        {
+            _blendStates[i].Dispose();
+        }
+
+        _noColorBlendState.Dispose();
+
+        foreach (Microsoft.Xna.Framework.Graphics.DepthStencilState depthStencilState in _depthStencilStates)
+        {
+            depthStencilState.Dispose();
+        }
+
+        foreach (Microsoft.Xna.Framework.Graphics.RasterizerState rasterizerState in _rasterizerStates)
+        {
+            rasterizerState.Dispose();
+        }
+
+        _spriteBatch.Dispose();
+    }
+
+    private Microsoft.Xna.Framework.Graphics.Effect[] LoadShaders(Microsoft.Xna.Framework.Content.ContentManager contentManager)
     {
         Microsoft.Xna.Framework.Graphics.Effect[] effects = new Microsoft.Xna.Framework.Graphics.Effect[(int)Shader.Enum.Count - 1];
 
@@ -91,17 +116,21 @@ public sealed class NoesisRenderDevice : RenderDevice
         {
             string shaderName = ((Shader.Enum)i).ToString();
 
-            effects[i] = contentManager.Load<Microsoft.Xna.Framework.Graphics.Effect>($"Content\\Noesis\\Effects\\{shaderName}");
-        }
+            _logger.LogInformation($"Loading effect: Content/Noesis/Effects/{shaderName}");
+
+            effects[i] = contentManager.Load<Microsoft.Xna.Framework.Graphics.Effect>($"Content/Noesis/Effects/{shaderName}");
+
+			_logger.LogInformation("\t Done");
+		}
 
         return effects;
     }
 
     private static Microsoft.Xna.Framework.Graphics.BlendState[] CreateBlendStates()
     {
-        return new Microsoft.Xna.Framework.Graphics.BlendState[]
-        {
-            Microsoft.Xna.Framework.Graphics.BlendState.Opaque,
+        return
+		[
+			Microsoft.Xna.Framework.Graphics.BlendState.Opaque,
             new()
             {
                 Name ="SrcOver",
@@ -153,7 +182,7 @@ public sealed class NoesisRenderDevice : RenderDevice
                 ColorDestinationBlend = Microsoft.Xna.Framework.Graphics.Blend.InverseSourceAlpha,
                 ColorSourceBlend = Microsoft.Xna.Framework.Graphics.Blend.One,
             }
-        };
+        ];
     }
 
     private static Microsoft.Xna.Framework.Graphics.BlendState CreateNoColorBlendState() => new()
@@ -282,9 +311,9 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     private static Microsoft.Xna.Framework.Graphics.RasterizerState[] CreateResterizerStates()
     {
-        return new Microsoft.Xna.Framework.Graphics.RasterizerState[]
-        {
-            new()
+        return
+		[
+			new()
             {
                 Name ="Noesis_Solid_Scissor",
                 DepthBias = 0,
@@ -328,40 +357,27 @@ public sealed class NoesisRenderDevice : RenderDevice
                 CullMode = Microsoft.Xna.Framework.Graphics.CullMode.None,
                 ScissorTestEnable = false
             }
-        };
+        ];
     }
 
 
     public override void BeginOffscreenRender()
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(BeginOffscreenRender));
-#endif
         _scissorRectEnabled = true;
     }
 
     public override void BeginOnscreenRender()
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(BeginOnscreenRender));
-#endif
     }
 
     public override void BeginTile(RenderTarget surface, Tile tile)
     {
-#if DEBUG_LOG
-        _logger.LogDebug($"{nameof(BeginTile)} X:{tile.X}, Y:{tile.X}, Width:{tile.Width}, Height:{tile.Height}");
-#endif
 
         //_device.ScissorRectangle = new Microsoft.Xna.Framework.Rectangle((int)tile.X, (int)tile.Y, (int)tile.Width, (int)tile.Height);
     }
 
     public override RenderTarget CloneRenderTarget(string label, RenderTarget surface)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(CloneRenderTarget));
-#endif
-
         if (surface is NoesisRenderTarget renderTarget)
         {
             return new NoesisRenderTarget(
@@ -385,10 +401,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     public override RenderTarget CreateRenderTarget(string label, uint width, uint height, uint sampleCount, bool needsStencil)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(CreateRenderTarget));
-#endif
-
         return new NoesisRenderTarget(label,
             new Microsoft.Xna.Framework.Graphics.RenderTarget2D(
                 _device,
@@ -404,10 +416,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     public override Texture CreateTexture(string label, uint width, uint height, uint numLevels, TextureFormat format, nint data)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(CreateTexture));
-#endif
-
         NoesisTexture noesisTexture = new(
             label,
             new Microsoft.Xna.Framework.Graphics.Texture2D(_device,
@@ -415,10 +423,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
         if (data != 0)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(CreateTexture) + " - setting data");
-#endif
-
             nint[] dataArray = new nint[numLevels];
 
             for (int i = 0; i < numLevels; i++)
@@ -438,10 +442,6 @@ public sealed class NoesisRenderDevice : RenderDevice
                 width = Math.Max(width, 1);
                 height = Math.Max(height, 1);
             }
-
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(CreateTexture) + " - data set");
-#endif
         }
 
         return noesisTexture;
@@ -449,15 +449,11 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     public override void DrawBatch(ref Batch batch)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(DrawBatch));
-#endif
-
         Microsoft.Xna.Framework.Graphics.Effect effect = _effects[batch.Shader.Index];
 
-        SetTextures(batch, effect);
+		SetTextures(batch, effect);
 
-        SetEffectParameters(batch, effect);
+		SetEffectParameters(batch, effect);
 
         effect.Techniques[0].Passes[0].Apply();
 
@@ -466,16 +462,10 @@ public sealed class NoesisRenderDevice : RenderDevice
         NoesisVertexUtils.DrawUserIndexedPrimitives(_device, _vertices, _indices, batch);
     }
 
-    private void SetTextures(in Batch batch, Microsoft.Xna.Framework.Graphics.Effect effect)
+    private static void SetTextures(in Batch batch, Microsoft.Xna.Framework.Graphics.Effect effect)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(SetTextures));
-#endif        
         if (batch.Pattern is NoesisTexture patternTexture)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(SetTextures) + "-Pattern: " + patternTexture.Label);
-#endif
             if (effect.Parameters[PATTERN_TEXTURE_SLOT] is Microsoft.Xna.Framework.Graphics.EffectParameter parameter)
             {
                 if (parameter.GetValueTexture2D() != patternTexture.Texture)
@@ -487,9 +477,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
         if (batch.Ramps is NoesisTexture rampsTexture)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(SetTextures) + "-Ramps: " + rampsTexture.Label);
-#endif
             if (effect.Parameters[RAMPS_TEXTURE_SLOT] is Microsoft.Xna.Framework.Graphics.EffectParameter parameter)
             {
                 if (parameter.GetValueTexture2D() != rampsTexture.Texture)
@@ -501,9 +488,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
         if (batch.Image is NoesisTexture imageTexture)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(SetTextures) + "-Image: " + imageTexture.Label);
-#endif
             if (effect.Parameters[IMAGE_TEXTURE_SLOT] is Microsoft.Xna.Framework.Graphics.EffectParameter parameter)
             {
                 if (parameter.GetValueTexture2D() != imageTexture.Texture)
@@ -515,9 +499,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
         if (batch.Glyphs is NoesisTexture glyphsTexture)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(SetTextures) + "-Glyphs: " + glyphsTexture.Label);
-#endif
             if (effect.Parameters[GLYPHS_TEXTURE_SLOT] is Microsoft.Xna.Framework.Graphics.EffectParameter parameter)
             {
                 if (parameter.GetValueTexture2D() != glyphsTexture.Texture)
@@ -529,9 +510,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
         if (batch.Shadow is NoesisTexture shadowTexture)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(SetTextures) + "-Shadow: " + shadowTexture.Label);
-#endif
             if (effect.Parameters[SHADOW_TEXTURE_SLOT] is Microsoft.Xna.Framework.Graphics.EffectParameter parameter)
             {
                 if (parameter.GetValueTexture2D() != shadowTexture.Texture)
@@ -542,19 +520,11 @@ public sealed class NoesisRenderDevice : RenderDevice
         }
     }
 
-    private void SetEffectParameters(in Batch batch, Microsoft.Xna.Framework.Graphics.Effect effect)
+    private static void SetEffectParameters(in Batch batch, Microsoft.Xna.Framework.Graphics.Effect effect)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(SetEffectParameters));
-#endif
-
         if (batch.VertexUniform0.NumWords == 16 &&
             Marshal.PtrToStructure<Matrix4>(batch.VertexUniform0.Values) is Matrix4 matrix)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(SetEffectParameters) + " - " + PROJECTION_MATRIX_PARAMETER);
-#endif
-
             effect.Parameters[PROJECTION_MATRIX_PARAMETER].SetValue(FromNoesisToMonogame(matrix));
         }
         else if (batch.VertexUniform0.NumWords != 0)
@@ -565,10 +535,6 @@ public sealed class NoesisRenderDevice : RenderDevice
         if (batch.VertexUniform1.NumWords == 2 &&
             Marshal.PtrToStructure<Microsoft.Xna.Framework.Vector2>(batch.VertexUniform1.Values) is Microsoft.Xna.Framework.Vector2 texSize)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(SetEffectParameters) + " - " + TEXTURE_SIZE_PARAMETER + ": " + texSize.ToString());
-#endif
-
             effect.Parameters[TEXTURE_SIZE_PARAMETER].SetValue(texSize);
         }
         else if (batch.VertexUniform1.NumWords != 0)
@@ -579,19 +545,11 @@ public sealed class NoesisRenderDevice : RenderDevice
         if (batch.PixelUniform0.NumWords == 1 &&
             Marshal.PtrToStructure<float>(batch.PixelUniform0.Values) is float opacity)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(SetEffectParameters) + " - " + OPACITY_PARAMETER + ": " + opacity.ToString());
-#endif
-
             effect.Parameters[OPACITY_PARAMETER].SetValue(opacity);
         }
         else if (batch.PixelUniform0.NumWords == 4 &&
             Marshal.PtrToStructure<Microsoft.Xna.Framework.Vector4>(batch.PixelUniform0.Values) is Microsoft.Xna.Framework.Vector4 rgba)
         {
-#if DEBUG_LOG
-            _logger.LogDebug(nameof(SetEffectParameters) + " - " + RGBA_PARAMETER + ": " + rgba.ToString());
-#endif
-
             effect.Parameters[RGBA_PARAMETER].SetValue(rgba);
         }
         else if (batch.PixelUniform0.NumWords != 0)
@@ -601,10 +559,6 @@ public sealed class NoesisRenderDevice : RenderDevice
                 Marshal.PtrToStructure<Microsoft.Xna.Framework.Vector4>(batch.PixelUniform0.Values) is Microsoft.Xna.Framework.Vector4 radialGrad0 &&
                 Marshal.PtrToStructure<Microsoft.Xna.Framework.Vector3>(batch.PixelUniform0.Values + Marshal.SizeOf<Microsoft.Xna.Framework.Vector4>()) is Microsoft.Xna.Framework.Vector3 radialGrad1)
             {
-#if DEBUG_LOG
-                _logger.LogDebug(nameof(SetEffectParameters) + " - " + RADIAL_GRAD_0_PARAMETER + ": " + radialGrad0.ToString());
-                _logger.LogDebug(nameof(SetEffectParameters) + " - " + RADIAL_GRAD_1_PARAMETER + ": " + radialGrad1.ToString());
-#endif
                 effect.Parameters[RADIAL_GRAD_0_PARAMETER].SetValue(radialGrad0);
                 effect.Parameters[RADIAL_GRAD_1_PARAMETER].SetValue(radialGrad1);
             }
@@ -622,9 +576,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     private void SetRenderDeviceState(in Batch batch)
     {
-#if DEBUG_LOG
-        _logger.LogDebug($"{nameof(SetRenderDeviceState)}, BlendMode:{batch.RenderState.BlendMode}, StencilMode:{batch.RenderState.StencilMode}, StencilReference:{batch.StencilRef}, ColorEnabled:{batch.RenderState.ColorEnable}");
-#endif        
         _device.BlendState = batch.RenderState.ColorEnable ? _blendStates[(int)batch.RenderState.BlendMode] : _noColorBlendState;
 
         _device.DepthStencilState = _depthStencilStates[(int)batch.RenderState.StencilMode + _depthStencilStatesCount * batch.StencilRef];
@@ -634,24 +585,15 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     public override void EndOffscreenRender()
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(EndOffscreenRender));
-#endif
         _device.SetRenderTarget(null);
     }
 
     public override void EndOnscreenRender()
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(EndOnscreenRender));
-#endif      
     }
 
     public override void EndTile(RenderTarget surface)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(EndTile));
-#endif
 
         //_device.ScissorRectangle = new Microsoft.Xna.Framework.Rectangle(0, 0, _device.Viewport.Width, _device.Viewport.Height);
         //_device.RasterizerState = Microsoft.Xna.Framework.Graphics.RasterizerState.CullNone;
@@ -659,10 +601,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     public unsafe override nint MapIndices(uint bytes)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(MapIndices));
-#endif
-
         int indicesCount = (int)(bytes / 2);
 
         if (_indices.Length < indicesCount)
@@ -679,10 +617,6 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     public unsafe override nint MapVertices(uint bytes)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(MapVertices));
-#endif
-
         if (_vertices.Length < bytes)
         {
             _vertices = new byte[bytes];
@@ -697,17 +631,11 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     public override void ResolveRenderTarget(RenderTarget surface, Tile[] tiles)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(ResolveRenderTarget));
-#endif
         //_device.SetRenderTarget(null);
     }
 
     public override void SetRenderTarget(RenderTarget surface)
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(SetRenderTarget));
-#endif
         if (surface is NoesisRenderTarget renderTarget)
         {
             _device.SetRenderTarget(renderTarget.RenderTarget2D);
@@ -720,20 +648,12 @@ public sealed class NoesisRenderDevice : RenderDevice
 
     public override void UnmapIndices()
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(UnmapIndices));
-#endif
-
         _indicesMemoryHandle?.Dispose();
         _indicesMemoryHandle = null;
     }
 
     public override void UnmapVertices()
     {
-#if DEBUG_LOG
-        _logger.LogDebug(nameof(UnmapVertices));
-#endif
-
         _verticesMemoryHandle?.Dispose();
         _verticesMemoryHandle = null;
     }
@@ -742,20 +662,12 @@ public sealed class NoesisRenderDevice : RenderDevice
     {
         if (texture is NoesisTexture noesisTexture)
         {
-#if DEBUG_LOG
-            _logger.LogDebug($"{nameof(UpdateTexture)} {noesisTexture.Label}: {level}, {x}, {y}, {width}, {height}");
-#endif
-
             int pixelSize = NoesisTexture.GetPixelSizeForSurfaceFormat(noesisTexture.Texture.Format);
             int size = (int)(width * height * pixelSize);
 
             Span<byte> dataSpan = new(data.ToPointer(), size);
 
             noesisTexture.Texture.SetData((int)level, new((int)x, (int)y, (int)width, (int)height), dataSpan.ToArray(), 0, size);
-
-#if DEBUG_LOG
-            _logger.LogDebug($"{nameof(UpdateTexture)} data set");
-#endif
 
 #if EXPORT_TEXTURES
             using System.IO.StreamWriter writer = new (@$"D:\Projects\textures\{noesisTexture.Label}.png");

@@ -12,6 +12,8 @@ public sealed class NoesisTexture : Texture
     {
         Label = label;
         Texture = texture;
+
+        NoesisResourceTracker.Track(texture, this);
     }
 
     public override uint Width => (uint)Texture.Width;

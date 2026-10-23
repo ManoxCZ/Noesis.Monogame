@@ -4,6 +4,7 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<Configurations>Debug;Release</Configurations>
 		<Nullable>enable</Nullable>
+		<Version>4.0.1</Version>
 		<MonoGamePlatform>DesktopGL</MonoGamePlatform>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>		
@@ -14,6 +15,6 @@
 		<RepositoryUrl>https://github.com/ManoxCZ/Noesis.Monogame.git</RepositoryUrl> 
     	<RepositoryType>git</RepositoryType>	
  		<Copyright>Copyright 2023-2026 (c) Marek Novosad. All rights reserved.</Copyright>
- 		<PackageTags>noesis noesisui monogame</PackageTags>
+ 		<PackageTags>noesis noesisui monogame</PackageTags>		
 	</PropertyGroup>
 </Project>
