@@ -169,6 +169,11 @@ namespace Noesis.MonoGame.TestApp.GUI
                     scale = (float)Math.Max(1.0F, e.NewSize.Height / (720.0F * dpi)) * dpi;
                 }
 
+                // LayoutTransform is applied after layout, so pin the root to view/scale
+                // to keep the rendered content exactly the size of the view
+                LayoutRoot.Width = e.NewSize.Width / scale;
+                LayoutRoot.Height = e.NewSize.Height / scale;
+
                 ScaleTransform rootScale = (ScaleTransform)LayoutRoot.LayoutTransform;
                 rootScale.ScaleX = rootScale.ScaleY = scale;
             };
