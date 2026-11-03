@@ -15,7 +15,7 @@
     <tags>noesis noesisui monogame gui xaml</tags>
     <dependencies>
       <group targetFramework=".NETCoreApp10.0">
-        <dependency id="Noesis.GUI" version="4.0.0" />
+        <dependency id="Noesis.GUI" version="4.0.1" />
         <dependency id="MonoGame.Framework.Native" version="3.8.6" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="10.0.13" />
       </group>
@@ -23,7 +23,7 @@
   </metadata>
   <files>
     <!-- README file (will be shown as package README on nuget.org) -->
-    <file src="readme" target="readme.md" />
+    <file src="..\README.md" target="" />
     
     <!-- Main assembly and symbols -->
     <file src="..\Noesis.MonoGame\bin\Release\net10.0\publish\Noesis.MonoGame.dll" target="lib\net10.0\" />
