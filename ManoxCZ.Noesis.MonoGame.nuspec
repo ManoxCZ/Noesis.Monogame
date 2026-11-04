@@ -1,64 +1,76 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
-  <metadata>
-    <id>ManoxCZ.Noesis.MonoGame</id>
-    <version>4.0.1-preview4</version>
-    <title>ManoxCZ.Noesis.MonoGame</title>
-    <authors>ManoxCZ</authors>
-    <owners>ManoxCZ</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">MIT</license>
-    <readme>docs/README.md</readme>
-    <projectUrl>https://github.com/ManoxCZ/Noesis.Monogame</projectUrl>
-    <repository url="https://github.com/ManoxCZ/Noesis.Monogame.git" type="git" />
-    <description>NoesisUI integration into MonoGame framework using the "native" Noesis renderer.
-      Supports all three MonoGame graphics backends: OpenGL 4, Vulkan, and DirectX 12.</description>
-    <copyright>Copyright 2023-2026 (c) Marek Novosad. All rights reserved.</copyright>
-    <tags>noesis noesisui monogame gui xaml</tags>
-    <dependencies>
-      <group targetFramework="net10.0">
-        <dependency id="Noesis.GUI" version="4.0.1" />
-        <dependency id="MonoGame.Framework.Native" version="3.8.6" />
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="10.0.13" />
-      </group>
-    </dependencies>
-  </metadata>
-  <files>
-    <!-- README file (will be shown as package README on nuget.org) -->
-    <file src="README.md" target="docs" />
+      <metadata>
+            <id>ManoxCZ.Noesis.MonoGame</id>
+            <version>4.0.1-preview5</version>
+            <title>ManoxCZ.Noesis.MonoGame</title>
+            <authors>ManoxCZ</authors>
+            <owners>ManoxCZ</owners>
+            <requireLicenseAcceptance>false</requireLicenseAcceptance>
+            <license type="expression">MIT</license>
+            <readme>docs/README.md</readme>
+            <projectUrl>https://github.com/ManoxCZ/Noesis.Monogame</projectUrl>
+            <repository url="https://github.com/ManoxCZ/Noesis.Monogame.git" type="git" />
+            <description>NoesisUI integration into MonoGame framework using the "native" Noesis
+                  renderer.
+                  Supports all three MonoGame graphics backends: OpenGL 4, Vulkan, and DirectX 12.</description>
+            <copyright>Copyright 2023-2026 (c) Marek Novosad. All rights reserved.</copyright>
+            <tags>noesis noesisui monogame gui xaml</tags>
+            <dependencies>
+                  <group targetFramework="net10.0">
+                        <dependency id="Noesis.GUI" version="4.0.1" />
+                        <dependency id="MonoGame.Framework.Native" version="3.8.6" />
+                        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="10.0.13" />
+                  </group>
+            </dependencies>
+            <contentFiles>
+                  <files include="any/any/Content/**/*.*" buildAction="Content" copyToOutput="true" />
+            </contentFiles>
+      </metadata>
+      <files>
+            <!-- README file (will be shown as package README on nuget.org) -->
+            <file src="README.md" target="docs" />
 
-    <!-- Main assembly and symbols -->
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/Noesis.MonoGame.dll"
-          target="lib/net10.0" />
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/Noesis.MonoGame.pdb"
-          target="lib/net10.0" />
+            <!-- Main assembly and symbols -->
+            <file src="Noesis.MonoGame/bin/Release/net10.0/publish/Noesis.MonoGame.dll"
+                  target="lib/net10.0" />
+            <file src="Noesis.MonoGame/bin/Release/net10.0/publish/Noesis.MonoGame.pdb"
+                  target="lib/net10.0" />
 
-    <!-- Native Noesis libraries for all platforms -->
-    <!-- Windows -->
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/win-x64/native/Noesis.dll"
-          target="runtimes/win-x64/native" />
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/win-x86/native/Noesis.dll"
-          target="runtimes/win-x86/native" />
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/win10-arm/native/Noesis.dll"
-          target="runtimes/win-arm/native" />
-    
-    <!-- macOS -->
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/osx-x64/native/Noesis.dylib"
-          target="runtimes/osx-x64/native" />
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/osx-arm64/native/Noesis.dylib"
-          target="runtimes/osx-arm64/native" />
+            <!-- Native Noesis libraries for all platforms -->
+            <!-- Windows -->
+            <file
+                  src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/win-x64/native/Noesis.dll"
+                  target="runtimes/win-x64/native" />
+            <file
+                  src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/win-x86/native/Noesis.dll"
+                  target="runtimes/win-x86/native" />
+            <file
+                  src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/win10-arm/native/Noesis.dll"
+                  target="runtimes/win-arm/native" />
 
-    <!-- Linux -->
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/linux-x64/native/libNoesis.so"
-          target="runtimes/linux-x64/native" />
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/linux-arm64/native/libNoesis.so"
-          target="runtimes/linux-arm64/native" />
-    <file src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/linux-arm/native/libNoesis.so"
-          target="runtimes/linux-arm/native" />
+            <!-- macOS -->
+            <file
+                  src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/osx-x64/native/Noesis.dylib"
+                  target="runtimes/osx-x64/native" />
+            <file
+                  src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/osx-arm64/native/Noesis.dylib"
+                  target="runtimes/osx-arm64/native" />
 
-    <!-- Content files (PackageReference-compatible) -->
-    <file src="Content/**/*"
-          target="contentFiles/any/any"
-          buildAction="Content" copyToOutput="true" />
-  </files>
+            <!-- Linux -->
+            <file
+                  src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/linux-x64/native/libNoesis.so"
+                  target="runtimes/linux-x64/native" />
+            <file
+                  src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/linux-arm64/native/libNoesis.so"
+                  target="runtimes/linux-arm64/native" />
+            <file
+                  src="Noesis.MonoGame/bin/Release/net10.0/publish/runtimes/linux-arm/native/libNoesis.so"
+                  target="runtimes/linux-arm/native" />
+
+            <!-- Content files (PackageReference-compatible) -->
+            <file src="Content/**/*" target="contentFiles/any/any"
+                  buildAction="Content"
+                  copyToOutput="true" />
+      </files>
 </package>
