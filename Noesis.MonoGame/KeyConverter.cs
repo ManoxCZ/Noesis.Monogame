@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Noesis.MonoGame;
 
-internal static class KeyConverter
+public static class KeyConverter
 {
     private static readonly Dictionary<Microsoft.Xna.Framework.Input.Keys, Key> _noesisKeys = new()
         {
