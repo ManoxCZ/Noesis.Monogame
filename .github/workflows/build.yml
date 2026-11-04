@@ -22,54 +22,20 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.x
-    
-    - name: Setup MonoGame DXC tool
+        
+# Locate dxc.exe in the Windows SDK installation on the runner and add to PATH
+    - name: Add DXC (DirectX Shader Compiler) to PATH
+      shell: powershell
       run: |
-        # Find dxc.exe from the restored MonoGame.Tool.Dxc package
-        # The package is restored to the user profile or a local cache
-        $possiblePaths = @(
-          "$env:USERPROFILE\.nuget\packages\monogame.tool.dxc\*\tools\*",
-          "$env:USERPROFILE\.nuget\packages\monogame.tool.dxc\*\runtimes\win-x64\native",
-          "$PWD\.nuget\packages\monogame.tool.dxc\*\tools\*",
-          "$PWD\.nuget\packages\monogame.tool.dxc\*\runtimes\win-x64\native"
-        )
-        
-        $found = $false
-        foreach ($path in $possiblePaths) {
-          $dxcExe = Get-ChildItem -Path $path -Filter "dxc.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-          if ($dxcExe -ne $null) {
-            Write-Output "Found dxc.exe at: $($dxcExe.DirectoryName)"
-            echo "$($dxcExe.DirectoryName)" | Out-File -FilePath $env:GITHUB_PATH -Append
-            $found = $true
-            break
+          $dxcPath = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\bin" -Filter "dxc.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DirectoryName -First 1
+          if ($dxcPath) {
+            Write-Host "Found DXC at: $dxcPath"
+            Add-Content -Path $env:GITHUB_PATH -Value $dxcPath
+          } else {
+            Write-Error "dxc.exe could not be found in Windows SDK installation."
           }
-        }
-        
-        # If not found, try installing via dotnet tool
-        if (-not $found) {
-          Write-Output "Installing MonoGame.Tool.Dxc as global tool..."
-          dotnet tool install --global MonoGame.Tool.Dxc --version 1.9.2607.1
-          # Add global tools to PATH
-          $globalToolsPath = "$env:USERPROFILE\.dotnet\global-tools"
-          if (Test-Path "$globalToolsPath") {
-            echo "$globalToolsPath" | Out-File -FilePath $env:GITHUB_PATH -Append
-          }
-          # Also check for the specific tool directory
-          $dxcToolPath = Get-ChildItem -Path "$env:USERPROFILE\.dotnet\global-tools" -Directory -Recurse | Where-Object { $_.Name -like "*dxc*" } | Select-Object -First 1
-          if ($dxcToolPath -ne $null) {
-            echo "$dxcToolPath" | Out-File -FilePath $env:GITHUB_PATH -Append
-          }
-        }
-        
-        # Verify dxc is available
-        try {
-          dxc.exe --version
-        } catch {
-          Write-Warning "Could not verify dxc installation"
-        }
-      shell: pwsh
 
-    - name: Build package (dry run)
+    - name: Build package
       run: build_package.bat
       shell: cmd
 
