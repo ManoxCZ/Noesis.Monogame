@@ -69,7 +69,7 @@ jobs:
       run: |
         $package = Get-ChildItem -Path . -Filter "ManoxCZ.Noesis.MonoGame.*.nupkg" -Recurse | Select-Object -First 1
         if ($package) {
-          Write-Output "package_path=$($package.FullName)"
+          echo "package_path=$($package.FullName)" >> $env:GITHUB_OUTPUT
           Write-Output "Found package: $($package.Name)"
         } else {
           throw "No ManoxCZ.Noesis.MonoGame.*.nupkg file found"
