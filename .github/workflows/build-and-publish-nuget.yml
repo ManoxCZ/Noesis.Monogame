@@ -29,7 +29,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.x
-        
+
+    - name: Setup NuGet CLI
+      uses: NuGet/setup-nuget@v1
+
     - name: Download and Setup SPIR-V Enabled DXC
       shell: powershell
       run: |
@@ -80,5 +83,7 @@ jobs:
         }
         
         Write-Output "Publishing $($nupkg.FullName) to NuGet using Trusted Publishing..."
-        dotnet nuget push "$($nupkg.FullName)" --api-key ${{ github.token }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        nuget push "$($nupkg.FullName)" -Source https://api.nuget.org/v3/index.json -SkipDuplicate
       shell: pwsh
+      env:
+        NUGET_AUTH_TOKEN: ${{ github.token }}
