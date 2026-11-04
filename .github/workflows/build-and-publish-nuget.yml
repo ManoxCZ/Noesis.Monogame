@@ -77,17 +77,23 @@ jobs:
       uses: actions/github-script@v7
       with:
         script: |
-          // Get OIDC token and set as environment variable
+          // Get OIDC token for NuGet
           process.env.NUGET_AUTH_TOKEN = await core.getIDToken('https://api.nuget.org');
           
           // Find and publish the package
           const { execSync } = require('child_process');
-          const nupkg = execSync('Get-ChildItem -Path . -Filter "*.nupkg" -Recurse | Select-Object -First 1 -ExpandProperty FullName', { shell: 'powershell.exe', encoding: 'utf8' }).trim();
+          const nupkg = execSync(
+            'Get-ChildItem -Path . -Filter "*.nupkg" -Recurse | Select-Object -First 1 -ExpandProperty FullName',
+            { shell: 'powershell.exe', encoding: 'utf8' }
+          ).trim();
           
           if (!nupkg) {
             core.setFailed('No .nupkg file found');
             return;
           }
           
-          console.log(`Publishing ${nupkg} to NuGet using Trusted Publishing...`);
-          execSync(`nuget push "${nupkg}" -Source https://api.nuget.org/v3/index.json -SkipDuplicate`, { stdio: 'inherit' });
+          console.log(`Publishing ${nupkg} to NuGet...`);
+          execSync(
+            `dotnet nuget push "${nupkg}" -s https://api.nuget.org/v3/index.json --skip-duplicate`,
+            { stdio: 'inherit' }
+          );
