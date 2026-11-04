@@ -14,96 +14,47 @@ on:
         type: string
 
 jobs:
-  build-and-publish:
+  build:
     runs-on: windows-latest
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
 
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.x
-
-    - name: Get package version
-      id: get-version
-      run: |
-        # Extract version from nuspec file
-        $version = (Select-String -Path Noesis.MonoGame.nuspec -Pattern '<version>(.*?)</version>').Matches.Groups[1].Value
-        if ("${{ github.event.inputs.version }}" -ne "") {
-          $version = "${{ github.event.inputs.version }}"
-        }
-        # If triggered by tag, use tag name (without 'v' prefix if present)
-        if ("${{ github.ref_type }}" -eq "tag") {
-          $tag = "${{ github.ref_name }}"
-          if ($tag.StartsWith("v")) {
-            $tag = $tag.Substring(1)
-          }
-          $version = $tag
-        }
-        Write-Output "Package version: $version"
-        echo "package_version=$version" >> $env:GITHUB_OUTPUT
-      shell: pwsh
-
-    - name: Update nuspec version (if needed)
-      if: steps.get-version.outputs.package_version != '' && (github.event.inputs.version != '' || github.ref_type == 'tag')
-      run: |
-        $version = "${{ steps.get-version.outputs.package_version }}"
-        Write-Output "Updating nuspec version to $version"
-        (Get-Content Noesis.MonoGame.nuspec) -replace '<version>.*?</version>', "<version>$version</version>" | Set-Content Noesis.MonoGame.nuspec
-      shell: pwsh
-
-    - name: Restore dependencies
-      run: dotnet restore Noesis.MonoGame.slnx
-
-    - name: Setup MonoGame DXC tool
-      run: |
-        # Find dxc.exe from the restored MonoGame.Tool.Dxc package
-        # The package is restored to the user profile or a local cache
-        $possiblePaths = @(
-          "$env:USERPROFILE\.nuget\packages\monogame.tool.dxc\*\tools\*",
-          "$env:USERPROFILE\.nuget\packages\monogame.tool.dxc\*\runtimes\win-x64\native",
-          "$PWD\.nuget\packages\monogame.tool.dxc\*\tools\*",
-          "$PWD\.nuget\packages\monogame.tool.dxc\*\runtimes\win-x64\native"
-        )
         
-        $found = $false
-        foreach ($path in $possiblePaths) {
-          $dxcExe = Get-ChildItem -Path $path -Filter "dxc.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-          if ($dxcExe -ne $null) {
-            Write-Output "Found dxc.exe at: $($dxcExe.DirectoryName)"
-            echo "$($dxcExe.DirectoryName)" | Out-File -FilePath $env:GITHUB_PATH -Append
-            $found = $true
-            break
-          }
+    - name: Download and Setup SPIR-V Enabled DXC
+      shell: powershell
+      run: |
+        $ErrorActionPreference = 'Stop'
+        Write-Host "Fetching latest DirectX Shader Compiler release from GitHub..."
+        $release = Invoke-RestMethod -Uri "https://api.github.com/repos/microsoft/DirectXShaderCompiler/releases/latest"
+        $asset = $release.assets | Where-Object { $_.name -like "*.zip" } | Select-Object -First 1
+          
+        if (-not $asset) {
+            throw "Could not find a valid release asset zip."
         }
-        
-        # If not found, try installing via dotnet tool
-        if (-not $found) {
-          Write-Output "Installing MonoGame.Tool.Dxc as global tool..."
-          dotnet tool install --global MonoGame.Tool.Dxc --version 1.9.2607.1
-          # Add global tools to PATH
-          $globalToolsPath = "$env:USERPROFILE\.dotnet\global-tools"
-          if (Test-Path "$globalToolsPath") {
-            echo "$globalToolsPath" | Out-File -FilePath $env:GITHUB_PATH -Append
-          }
-          # Also check for the specific tool directory
-          $dxcToolPath = Get-ChildItem -Path "$env:USERPROFILE\.dotnet\global-tools" -Directory -Recurse | Where-Object { $_.Name -like "*dxc*" } | Select-Object -First 1
-          if ($dxcToolPath -ne $null) {
-            echo "$dxcToolPath" | Out-File -FilePath $env:GITHUB_PATH -Append
-          }
+          
+        Write-Host "Downloading asset: $($asset.name)..."
+        Invoke-WebRequest -Uri $asset.browser_download_url -OutFile "dxc.zip"
+          
+        Write-Host "Extracting files..."
+        Expand-Archive -Path "dxc.zip" -DestinationPath ".dxc" -Force
+          
+        $dxcExe = Get-ChildItem -Path ".dxc\bin\x64" -Filter "dxc.exe" -ErrorAction SilentlyContinue
+        if (-not $dxcExe) {
+            $dxcExe = Get-ChildItem -Path ".dxc" -Filter "dxc.exe" -Recurse | Where-Object { $_.DirectoryName -match '\\x64\\' } | Select-Object -First 1
         }
-        
-        # Verify dxc is available
-        try {
-          dxc.exe --version
-        } catch {
-          Write-Warning "Could not verify dxc installation"
+        if ($dxcExe) {
+            $dxcFolder = $dxcExe.DirectoryName
+            Write-Host "Successfully found dxc.exe at: $dxcFolder"
+            Add-Content -Path $env:GITHUB_PATH -Value $dxcFolder
+        } else {
+            throw "dxc.exe could not be located inside the extracted archive."
         }
-      shell: pwsh
 
     - name: Build package
       run: build_package.bat
