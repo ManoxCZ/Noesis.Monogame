@@ -83,7 +83,5 @@ jobs:
         }
         
         Write-Output "Publishing $($nupkg.FullName) to NuGet using Trusted Publishing..."
-        nuget push "$($nupkg.FullName)" -Source https://api.nuget.org/v3/index.json -SkipDuplicate
+        nuget push "$($nupkg.FullName)" -ApiKey ${{ github.token }} -Source https://api.nuget.org/v3/index.json -SkipDuplicate
       shell: pwsh
-      env:
-        NUGET_AUTH_TOKEN: ${{ github.token }}
