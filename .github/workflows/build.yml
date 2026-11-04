@@ -23,17 +23,20 @@ jobs:
       with:
         dotnet-version: 10.0.x
         
-# Locate dxc.exe in the Windows SDK installation on the runner and add to PATH
-    - name: Add DXC (DirectX Shader Compiler) to PATH
+    - name: Setup SPIR-V Enabled DXC
       shell: powershell
       run: |
-        $dxc = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10" -Filter "dxc.exe" -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -match '\\x64\\' } | Select-Object -First 1
-        if ($dxc) {
-          $dxcPath = $dxc.DirectoryName
-          Write-Host "Found DXC at: $dxcPath"
-          Add-Content -Path $env:GITHUB_PATH -Value $dxcPath
+        # Install the Microsoft DirectX Shader Compiler package containing DXC and SPIRV-cross capability
+        nuget install Microsoft.Direct3D.DXC -Version 1.7.2308 -OutputDirectory .dxc
+          
+        # Find the exact path to the bin folder containing dxc.exe
+        $dxcFolder = (Get-ChildItem -Path ".dxc" -Filter "dxc.exe" -Recurse).DirectoryName | Select-Object -First 1
+          
+        if ($dxcFolder) {
+          Write-Host "Adding DXC to PATH: $dxcFolder"
+          Add-Content -Path $env:GITHUB_PATH -Value $dxcFolder
         } else {
-          Write-Error "dxc.exe could not be found in Windows SDK x64 installation."
+          Write-Error "Could not locate dxc.exe inside downloaded NuGet package."
         }
 
     - name: Build package

@@ -40,8 +40,6 @@ else
     builder.Run(contentCollectionArgs);
 }
 
-Console.WriteLine("Ahoj");
-
 return builder.FailedToBuild > 0 ? -1 : 0;
 
 public class Builder : ContentBuilder
