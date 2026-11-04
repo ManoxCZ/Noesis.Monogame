@@ -4,8 +4,8 @@
     <id>ManoxCZ.Noesis.MonoGame</id>
     <version>4.0.1-preview</version>
     <title>ManoxCZ.Noesis.MonoGame</title>
-    <authors>Marek Novosad</authors>
-    <owners>Marek Novosad</owners>
+    <authors>ManoxCZ</authors>
+    <owners>ManoxCZ</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <readme>docs/README.md</readme>
