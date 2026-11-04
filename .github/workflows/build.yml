@@ -41,7 +41,7 @@ jobs:
         Write-Host "Extracting files..."
         Expand-Archive -Path "dxc.zip" -DestinationPath ".dxc" -Force
           
-        $dxcFolder = (Get-ChildItem -Path ".dxc" -Filter "dxc.exe" -Recurse).DirectoryName | Select-Object -First 1
+        $dxcFolder = (Get-ChildItem -Path ".dxc" -Filter "dxc.exe" -Recurse | Where-Object { $_.FullName -like "*x64*" }).DirectoryName | Select-Object -First 1
         if ($dxcFolder) {
             Write-Host "Successfully found dxc.exe at: $dxcFolder"
             Add-Content -Path $env:GITHUB_PATH -Value $dxcFolder
