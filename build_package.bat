@@ -16,4 +16,4 @@ REM xcopy WindowsDX12\Content\Noesis\Effects ..\..\..\NugetPackage\Content\Noesi
 
 cd ..\..\..
 
-dotnet pack Noesis.MonoGame.nuspec
+dotnet pack ManoxCZ.Noesis.MonoGame.nuspec
