@@ -23,20 +23,30 @@ jobs:
       with:
         dotnet-version: 10.0.x
         
-    - name: Setup SPIR-V Enabled DXC
+    - name: Download and Setup SPIR-V Enabled DXC
       shell: powershell
       run: |
-        # Install the Microsoft DirectX Shader Compiler package containing DXC and SPIRV-cross capability
-        nuget install Microsoft.Direct3D.DXC -Version 1.7.2308 -OutputDirectory .dxc
+        $ErrorActionPreference = 'Stop'
+        Write-Host "Fetching latest DirectX Shader Compiler release from GitHub..."
+        $release = Invoke-RestMethod -Uri "https://api.github.com/repos/microsoft/DirectXShaderCompiler/releases/latest"
+        $asset = $release.assets | Where-Object { $_.name -like "*.zip" } | Select-Object -First 1
           
-        # Find the exact path to the bin folder containing dxc.exe
+        if (-not $asset) {
+            throw "Could not find a valid release asset zip."
+        }
+          
+        Write-Host "Downloading asset: $($asset.name)..."
+        Invoke-WebRequest -Uri $asset.browser_download_url -OutFile "dxc.zip"
+          
+        Write-Host "Extracting files..."
+        Expand-Archive -Path "dxc.zip" -DestinationPath ".dxc" -Force
+          
         $dxcFolder = (Get-ChildItem -Path ".dxc" -Filter "dxc.exe" -Recurse).DirectoryName | Select-Object -First 1
-          
         if ($dxcFolder) {
-          Write-Host "Adding DXC to PATH: $dxcFolder"
-          Add-Content -Path $env:GITHUB_PATH -Value $dxcFolder
+            Write-Host "Successfully found dxc.exe at: $dxcFolder"
+            Add-Content -Path $env:GITHUB_PATH -Value $dxcFolder
         } else {
-          Write-Error "Could not locate dxc.exe inside downloaded NuGet package."
+            throw "dxc.exe could not be located inside the extracted archive."
         }
 
     - name: Build package
