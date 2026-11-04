@@ -17,6 +17,10 @@ jobs:
   build:
     runs-on: windows-latest
     
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -76,7 +80,5 @@ jobs:
         }
         
         Write-Output "Publishing $($nupkg.FullName) to NuGet using Trusted Publishing..."
-        dotnet nuget push "$($nupkg.FullName)" --source https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "$($nupkg.FullName)" --api-key ${{ github.token }} --source https://api.nuget.org/v3/index.json --skip-duplicate
       shell: pwsh
-      env:
-        NUGET_AUTH_TOKEN: ${{ github.token }}
