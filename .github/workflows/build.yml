@@ -1,0 +1,40 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore Noesis.MonoGame.slnx
+
+    - name: Build
+      run: |
+        dotnet build Noesis.MonoGame.slnx --configuration Release --no-restore
+
+    - name: Build package (dry run)
+      run: build_package.bat
+      shell: cmd
+
+    - name: List generated artifacts
+      run: |
+        Get-ChildItem -Path . -Filter "*.nupkg" -Recurse | Select-Object FullName
+      shell: pwsh
