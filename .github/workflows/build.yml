@@ -27,7 +27,7 @@ jobs:
     - name: Add DXC (DirectX Shader Compiler) to PATH
       shell: powershell
       run: |
-        $dxc = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\bin" -Filter "dxc.exe" -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -match '\\x64\\' } | Select-Object -First 1
+        $dxc = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10" -Filter "dxc.exe" -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -match '\\x64\\' } | Select-Object -First 1
         if ($dxc) {
           $dxcPath = $dxc.DirectoryName
           Write-Host "Found DXC at: $dxcPath"
