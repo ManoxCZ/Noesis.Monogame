@@ -72,24 +72,22 @@ jobs:
         Get-ChildItem -Path . -Filter "*.nupkg" -Recurse | Select-Object FullName
       shell: pwsh
 
-    - name: Get NuGet OIDC Token
+    - name: Publish to NuGet
       if: github.event_name != 'pull_request'
-      id: get_token
       uses: actions/github-script@v7
       with:
         script: |
-          const oidcToken = await core.getIDToken('https://api.nuget.org');
-          core.setOutput('token', oidcToken);
-
-    - name: Publish to NuGet
-      if: github.event_name != 'pull_request'
-      run: |
-        $nupkg = Get-ChildItem -Path . -Filter "*.nupkg" -Recurse | Select-Object -First 1
-        if (-not $nupkg) {
-          Write-Error "No .nupkg file found"
-          exit 1
-        }
-        
-        Write-Output "Publishing $($nupkg.FullName) to NuGet using Trusted Publishing..."
-        nuget push "$($nupkg.FullName)" -ApiKey ${{ steps.get_token.outputs.token }} -Source https://api.nuget.org/v3/index.json -SkipDuplicate
-      shell: pwsh
+          // Get OIDC token and set as environment variable
+          process.env.NUGET_AUTH_TOKEN = await core.getIDToken('https://api.nuget.org');
+          
+          // Find and publish the package
+          const { execSync } = require('child_process');
+          const nupkg = execSync('Get-ChildItem -Path . -Filter "*.nupkg" -Recurse | Select-Object -First 1 -ExpandProperty FullName', { shell: 'powershell.exe', encoding: 'utf8' }).trim();
+          
+          if (!nupkg) {
+            core.setFailed('No .nupkg file found');
+            return;
+          }
+          
+          console.log(`Publishing ${nupkg} to NuGet using Trusted Publishing...`);
+          execSync(`nuget push "${nupkg}" -Source https://api.nuget.org/v3/index.json -SkipDuplicate`, { stdio: 'inherit' });
