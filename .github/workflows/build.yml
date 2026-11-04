@@ -27,13 +27,13 @@ jobs:
     - name: Add DXC (DirectX Shader Compiler) to PATH
       shell: powershell
       run: |
-          $dxcPath = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\bin\*\x64" -Filter "dxc.exe" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DirectoryName -First 1
-          if ($dxcPath) {
-            Write-Host "Found DXC at: $dxcPath"
-            Add-Content -Path $env:GITHUB_PATH -Value $dxcPath
-          } else {
-            Write-Error "dxc.exe could not be found in Windows SDK installation."
-          }
+        $dxcPath = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\bin\*\x64" -Filter "dxc.exe" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DirectoryName -First 1
+        if ($dxcPath) {
+          Write-Host "Found DXC at: $dxcPath"
+          Add-Content -Path $env:GITHUB_PATH -Value $dxcPath
+        } else {
+          Write-Error "dxc.exe could not be found in Windows SDK installation."
+        }
 
     - name: Build package
       run: build_package.bat
