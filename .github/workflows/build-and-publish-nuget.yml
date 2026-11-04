@@ -65,11 +65,24 @@ jobs:
       shell: cmd
 
     - name: List generated packages
+      id: list_packages
       run: |
-        Get-ChildItem -Path . -Filter "*.nupkg" -Recurse | Select-Object FullName
+        $package = Get-ChildItem -Path . -Filter "ManoxCZ.Noesis.MonoGame.*.nupkg" -Recurse | Select-Object -First 1
+        if ($package) {
+          Write-Output "package_path=$($package.FullName)"
+          Write-Output "Found package: $($package.Name)"
+        } else {
+          throw "No ManoxCZ.Noesis.MonoGame.*.nupkg file found"
+        }
       shell: pwsh
 
-    - name: Publish to NuGet
-      if: github.event_name != 'pull_request'
-      run: dotnet nuget push **/*.nupkg -k ${{ github.token }} -s https://api.nuget.org/v3/index.json --skip-duplicate
-      shell: pwsh
+    # Get a short-lived NuGet API key
+    - name: NuGet login (OIDC → temp API key)
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: ManoxCZ # Recommended: use a secret like ${{ secrets.NUGET_USER }} for your nuget.org username (profile name), NOT your email address
+    
+    # Push the package
+    - name: NuGet push
+      run: dotnet nuget push "${{ steps.list_packages.outputs.package_path }}" --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
