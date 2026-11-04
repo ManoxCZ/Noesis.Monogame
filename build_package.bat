@@ -3,17 +3,7 @@
 dotnet publish Noesis.MonoGame\Noesis.MonoGame.csproj
 dotnet publish Noesis.MonoGame.Content\Noesis.MonoGame.Content.csproj
 
-cd Noesis.MonoGame.Content\bin\Release
-
-REM Noesis.MonoGame.Content.exe build -p DesktopGL -s ..\..\Assets -o DesktopGL
-REM xcopy DesktopGL\Content\Noesis\Effects ..\..\..\NugetPackage\Content\Noesis\Effects\DesktopGL /s /e /I
-
-REM Noesis.MonoGame.Content.exe build -p DesktopVk -s ..\..\Assets -o DesktopVk
-REM xcopy DesktopVk\Content\Noesis\Effects ..\..\..\NugetPackage\Content\Noesis\Effects\DesktopVk /s /e /I
-
-REM Noesis.MonoGame.Content.exe build -p WindowsDX12 -s ..\..\Assets -o WindowsDX12
-REM xcopy WindowsDX12\Content\Noesis\Effects ..\..\..\NugetPackage\Content\Noesis\Effects\WindowsDX12 /s /e /I
-
-cd ..\..\..
-
+xcopy "Noesis.MonoGame\bin\Release\net10.0\publish\Content\" "Content\" /s /e /I
 dotnet pack ManoxCZ.Noesis.MonoGame.nuspec
+
+rd /S /Q Content
