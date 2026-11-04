@@ -19,15 +19,14 @@ public static class Program
             builder.AddFile("application.log", Microsoft.Extensions.Logging.LogLevel.Debug);
         });
 
-        using (var game = new GameWithNoesis(loggerFactory)
+        using var game = new GameWithNoesis(loggerFactory)
         {
             NoesisLicenceName = string.Empty,
             NoesisLicenceKey = string.Empty,
             NoesisThemeFilename = @"GUI/Resources.xaml",
             NoesisMainViewFilename = @"GUI/MainWindow.xaml",
-        })
-        {               
-            game.Run();
-        }
+        };
+
+        game.Run();
     }
 }

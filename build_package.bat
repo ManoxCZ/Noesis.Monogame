@@ -15,10 +15,5 @@ REM Noesis.MonoGame.Content.exe build -p WindowsDX12 -s ..\..\Assets -o WindowsD
 REM xcopy WindowsDX12\Content\Noesis\Effects ..\..\..\NugetPackage\Content\Noesis\Effects\WindowsDX12 /s /e /I
 
 cd ..\..\..
-robocopy "." "NugetPackage" Noesis.MonoGame.nuspec /R:1 /W:1
-robocopy "." "NugetPackage" README.md /R:1 /W:1
-pushd NugetPackage
-ren README.md readme
-popd
 
-dotnet pack NugetPackage\Noesis.MonoGame.nuspec
+dotnet pack Noesis.MonoGame.nuspec

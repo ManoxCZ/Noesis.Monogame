@@ -25,7 +25,15 @@ var builder = new Builder();
 
 if (args is not null && args.Length > 0)
 {
-    builder.Run(args);
+    ContentBuilderParams parameters = ContentBuilderParams.Parse(args);
+
+    foreach(TargetPlatform platform in new TargetPlatform[] { TargetPlatform.DesktopGL, TargetPlatform.DesktopVK, TargetPlatform.WindowsDX12 })
+    {
+        parameters.Platform = platform;
+        parameters.SkipClean = true;
+        
+        builder.Run(parameters);
+    }
 }
 else
 {
@@ -99,7 +107,7 @@ public class Builder : ContentBuilder
         return contentCollection;
     }
 
-    private static void ImportShader(ContentCollection contentCollection, string effectPath, string defines)
+    private void ImportShader(ContentCollection contentCollection, string effectPath, string defines)
     {
         EffectImporter effectImporter = new();
         EffectProcessor effectProcessor = new()
@@ -108,6 +116,6 @@ public class Builder : ContentBuilder
             Defines = defines
         };
 
-        contentCollection.Include(effectPath, effectImporter, effectProcessor);
+        contentCollection.Include(effectPath, effectPath.Replace("Effects", $"Effects\\{Parameters.Platform}").Replace(".fx", string.Empty), effectImporter, effectProcessor);
     }
 }

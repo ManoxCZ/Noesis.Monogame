@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using MonoGame.Framework.Utilities;
 using Noesis.MonoGame.Generated;
 using System;
 using System.Buffers;
@@ -10,19 +11,11 @@ namespace Noesis.MonoGame;
 
 public sealed class NoesisRenderDevice : RenderDevice
 {
-#if DESKTOP_GL
-	private const string PATTERN_TEXTURE_SLOT = "patternSampler+pattern";
-	private const string RAMPS_TEXTURE_SLOT = "ramps";
-	private const string IMAGE_TEXTURE_SLOT = "imageSampler+image";
-	private const string GLYPHS_TEXTURE_SLOT = "glyphsSampler+glyphs";
-	private const string SHADOW_TEXTURE_SLOT = "shadowSampler+shadow";
-#else
     private const string PATTERN_TEXTURE_SLOT = "pattern";
     private const string RAMPS_TEXTURE_SLOT = "ramps";
     private const string IMAGE_TEXTURE_SLOT = "image";
     private const string GLYPHS_TEXTURE_SLOT = "glyphs";
     private const string SHADOW_TEXTURE_SLOT = "shadow";
-#endif
 	private const string PROJECTION_MATRIX_PARAMETER = "projectionMtx";
     private const string TEXTURE_SIZE_PARAMETER = "textureSize";
     private const string OPACITY_PARAMETER = "opacity";
@@ -116,9 +109,10 @@ public sealed class NoesisRenderDevice : RenderDevice
         {
             string shaderName = ((Shader.Enum)i).ToString();
 
-            _logger.LogInformation($"Loading effect: Content/Noesis/Effects/{shaderName}");
+            _logger.LogInformation($"Loading effect: Content/Noesis/Effects/{PlatformInfo.MonoGamePlatform}/{shaderName}");
 
-            effects[i] = contentManager.Load<Microsoft.Xna.Framework.Graphics.Effect>($"Content/Noesis/Effects/{shaderName}");
+            effects[i] = contentManager.Load<Microsoft.Xna.Framework.Graphics.Effect>(
+                $"Content/Noesis/Effects/{PlatformInfo.MonoGamePlatform}/{shaderName}");
 
 			_logger.LogInformation("\t Done");
 		}
