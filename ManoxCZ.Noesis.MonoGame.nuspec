@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
       <metadata>
             <id>ManoxCZ.Noesis.MonoGame</id>
-            <version>4.0.1</version>
+            <version>4.0.1</version>       
             <title>ManoxCZ.Noesis.MonoGame</title>
             <authors>ManoxCZ</authors>
             <owners>ManoxCZ</owners>
             <requireLicenseAcceptance>false</requireLicenseAcceptance>
             <license type="expression">MIT</license>
             <readme>docs/README.md</readme>
+            <icon>icon.png</icon>
             <projectUrl>https://github.com/ManoxCZ/Noesis.Monogame</projectUrl>
             <repository url="https://github.com/ManoxCZ/Noesis.Monogame.git" type="git" />
             <description>NoesisUI integration into MonoGame framework using the "native" Noesis
@@ -30,6 +31,9 @@
       <files>
             <!-- README file (will be shown as package README on nuget.org) -->
             <file src="README.md" target="docs" />
+
+            <!-- Icon file -->
+            <file src="images/icon.png" target="" />
 
             <!-- Main assembly and symbols -->
             <file src="Noesis.MonoGame/bin/Release/net10.0/publish/Noesis.MonoGame.dll"
